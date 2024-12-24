@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "categories")
 @NoArgsConstructor
@@ -20,4 +22,7 @@ public class Category {
 
     @Column(name = "category_status")
     private Boolean categoryStatus;
+
+//    @OneToMany(mappedBy = "category")
+//    private Set<Product> products;
 }
