@@ -1,5 +1,6 @@
 package com.ra.sesson02.controller;
 
+import com.ra.sesson02.model.dto.product.ProductResponseDTO;
 import com.ra.sesson02.model.entity.Product;
 import com.ra.sesson02.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAll(){
-        List<Product> products = productService.findAll();
+    public ResponseEntity<List<ProductResponseDTO>> getAll(){
+        List<ProductResponseDTO> products = productService.findAll();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

@@ -1,7 +1,15 @@
 package com.ra.sesson02.model.dto.product;
 
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class ProductResponseDTO {
     private Long id;
     private String productName;
