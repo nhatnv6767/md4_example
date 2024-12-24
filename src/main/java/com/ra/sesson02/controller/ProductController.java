@@ -1,14 +1,13 @@
 package com.ra.sesson02.controller;
 
+import com.ra.sesson02.model.dto.product.ProductRequestDTO;
 import com.ra.sesson02.model.dto.product.ProductResponseDTO;
 import com.ra.sesson02.model.entity.Product;
 import com.ra.sesson02.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,12 @@ public class ProductController {
     public ResponseEntity<List<ProductResponseDTO>> getAll(){
         List<ProductResponseDTO> products = productService.findAll();
         return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductResponseDTO> save(@ModelAttribute ProductRequestDTO product){
+        ProductResponseDTO productResponseDTO = productService.save(product);
+        return new ResponseEntity<>(productResponseDTO, HttpStatus.CREATED);
     }
 
 

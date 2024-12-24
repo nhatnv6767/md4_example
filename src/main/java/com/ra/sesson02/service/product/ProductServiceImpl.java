@@ -1,8 +1,12 @@
 package com.ra.sesson02.service.product;
 
+import com.ra.sesson02.model.dto.product.ProductRequestDTO;
 import com.ra.sesson02.model.dto.product.ProductResponseDTO;
 import com.ra.sesson02.model.entity.Product;
+import com.ra.sesson02.repository.CategoryRepository;
 import com.ra.sesson02.repository.ProductRepository;
+import com.ra.sesson02.service.UploadService;
+import com.ra.sesson02.service.category.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +16,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final UploadService uploadService;
+    private final CategoryServiceImpl categoryService;
 
     @Override
     public List<ProductResponseDTO> findAll() {
@@ -37,8 +43,32 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product save(Product product) {
-        return productRepository.save(product);
+    public ProductResponseDTO save(ProductRequestDTO productDTO) {
+
+        // upload file
+        String fileName = null;
+        if (productDTO.getImage() != null && !productDTO.getImage().isEmpty()) {
+            fileName = uploadService.uploadImage(productDTO.getImage());
+        }
+
+        Product product = Product.builder()
+                .productName(productDTO.getProductName())
+                .price(productDTO.getPrice())
+                .image(fileName)
+                .status(productDTO.getStatus())
+                .category(categoryService.findById(productDTO.getCategoryId()))
+                .build();
+
+        Product productNew = productRepository.save(product);
+        // convert tu entity -> DTO
+        return ProductResponseDTO.builder()
+                .id(productNew.getId())
+                .productName(productNew.getProductName())
+                .price(productNew.getPrice())
+                .image(productNew.getImage())
+                .status(productNew.getStatus())
+                .categoryName(productNew.getCategory().getCategoryName())
+                .build();
     }
 
     @Override
