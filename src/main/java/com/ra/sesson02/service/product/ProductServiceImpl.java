@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
                 .status(product.getStatus())
                 .categoryName(product.getCategory().getCategoryName())
                 .build()).collect(Collectors.toList());
-        return new PageImpl<>(responseDTOS, pageable, responseDTOS.size());
+        return new PageImpl<>(responseDTOS, pageable, productRepository.count());
     }
 
     @Override
