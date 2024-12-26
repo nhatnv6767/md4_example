@@ -23,13 +23,13 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<Page<Category>> index(
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "limit", defaultValue = "3") int limit,
             @RequestParam(name = "sortBy") String sortBy,
             @RequestParam(name = "orderBy", defaultValue = "asc") String orderBy
     ){
         Sort sort  = orderBy.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-        Pageable pageable = PageRequest.of(page, limit, sort);
+        Pageable pageable = PageRequest.of(page - 1, limit, sort);
         Page<Category> categories = categoryService.findAll(pageable);
         //
         return new ResponseEntity<>(categories, HttpStatus.OK);
