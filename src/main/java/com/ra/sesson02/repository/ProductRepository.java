@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 // repository for Product entity
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    Boolean existsByProductName(String productName);
 
 }

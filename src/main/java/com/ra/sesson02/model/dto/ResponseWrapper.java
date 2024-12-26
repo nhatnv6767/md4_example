@@ -13,5 +13,5 @@ import org.springframework.http.HttpStatus;
 public class ResponseWrapper <T>{
     private HttpStatus status;
     private int code;
-    private T data;
+    private T errorMessage;
 }

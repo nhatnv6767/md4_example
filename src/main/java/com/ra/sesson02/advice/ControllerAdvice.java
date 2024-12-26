@@ -25,7 +25,7 @@ public class ControllerAdvice {
                 ResponseWrapper.builder()
                         .code(400)
                         .status(HttpStatus.BAD_REQUEST)
-                        .data(map)
+                        .errorMessage(map)
                         .build()
         );
 

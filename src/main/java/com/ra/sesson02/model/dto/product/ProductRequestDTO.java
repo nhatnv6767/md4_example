@@ -1,5 +1,6 @@
 package com.ra.sesson02.model.dto.product;
 
+import com.ra.sesson02.validate.ProductUnique;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class ProductRequestDTO {
     @NotBlank(message = "Product name is required")
+    @ProductUnique(message = "Product name must be unique")
     private String productName;
     @NotNull(message = "Price is required")
 //    @Min(value = 1, message = "Price must be greater than 0")
