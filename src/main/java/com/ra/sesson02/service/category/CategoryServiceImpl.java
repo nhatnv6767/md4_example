@@ -3,6 +3,8 @@ package com.ra.sesson02.service.category;
 import com.ra.sesson02.model.entity.Category;
 import com.ra.sesson02.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class CategoryServiceImpl implements CategoryService{
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public Page<Category> findAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 
     @Override

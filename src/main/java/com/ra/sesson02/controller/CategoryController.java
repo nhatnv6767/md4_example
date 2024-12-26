@@ -4,6 +4,9 @@ import com.ra.sesson02.model.dto.DataError;
 import com.ra.sesson02.model.entity.Category;
 import com.ra.sesson02.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +21,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> index(){
-        List<Category> categories = categoryService.findAll();
+    public ResponseEntity<Page<Category>> index(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "limit", defaultValue = "3") int limit
+    ){
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Category> categories = categoryService.findAll(pageable);
         //
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
