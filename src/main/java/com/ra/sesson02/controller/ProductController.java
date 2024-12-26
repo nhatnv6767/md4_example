@@ -4,6 +4,7 @@ import com.ra.sesson02.model.dto.product.ProductRequestDTO;
 import com.ra.sesson02.model.dto.product.ProductResponseDTO;
 import com.ra.sesson02.model.entity.Product;
 import com.ra.sesson02.service.product.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,7 +43,7 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> save(@ModelAttribute ProductRequestDTO product){
+    public ResponseEntity<ProductResponseDTO> save(@ModelAttribute @Valid ProductRequestDTO product){
         ProductResponseDTO productResponseDTO = productService.save(product);
         return new ResponseEntity<>(productResponseDTO, HttpStatus.CREATED);
     }
