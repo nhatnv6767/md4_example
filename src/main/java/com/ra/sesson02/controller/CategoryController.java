@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,12 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<Page<Category>> index(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "limit", defaultValue = "3") int limit
+            @RequestParam(name = "limit", defaultValue = "3") int limit,
+            @RequestParam(name = "sortBy") String sortBy,
+            @RequestParam(name = "orderBy", defaultValue = "asc") String orderBy
     ){
-        Pageable pageable = PageRequest.of(page, limit);
+        Sort sort  = orderBy.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, limit, sort);
         Page<Category> categories = categoryService.findAll(pageable);
         //
         return new ResponseEntity<>(categories, HttpStatus.OK);
