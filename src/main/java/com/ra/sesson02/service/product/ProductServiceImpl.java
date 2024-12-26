@@ -8,6 +8,9 @@ import com.ra.sesson02.repository.ProductRepository;
 import com.ra.sesson02.service.UploadService;
 import com.ra.sesson02.service.category.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +38,21 @@ public class ProductServiceImpl implements ProductService {
                 .categoryName(product.getCategory().getCategoryName())
                 .build()).collect(Collectors.toList());
         return responseDTOS;
+    }
+
+    @Override
+    public Page<ProductResponseDTO> pagination(Pageable pageable) {
+        List<Product> products = productRepository.findAll(pageable).getContent();
+        List<ProductResponseDTO> responseDTOS;
+        responseDTOS = products.stream().map(product -> ProductResponseDTO.builder()
+                .id(product.getId())
+                .productName(product.getProductName())
+                .price(product.getPrice())
+                .image(product.getImage())
+                .status(product.getStatus())
+                .categoryName(product.getCategory().getCategoryName())
+                .build()).collect(Collectors.toList());
+        return new PageImpl<>(responseDTOS, pageable, responseDTOS.size());
     }
 
     @Override
@@ -75,4 +93,6 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
         productRepository.deleteById(id);
     }
+
+
 }

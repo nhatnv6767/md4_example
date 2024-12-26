@@ -1,5 +1,6 @@
 package com.ra.sesson02.model.dto.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
+//@JsonIgnoreProperties({"sort", ""})
 public class ProductResponseDTO {
     private Long id;
     private String productName;
